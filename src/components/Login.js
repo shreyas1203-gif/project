@@ -13,21 +13,21 @@ import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import Paper from '@mui/material/Paper';
 import GoogleLogin from 'react-google-login';
-
+import { useState } from 'react';
+import Navbar from './Navbar'
 export default function SignIn() {
-  const handleSubmit = (event) => {
-    event.preventDefault();
-    const data = new FormData(event.currentTarget);
-    console.log({
-      email: data.get('email'),
-      password: data.get('password'),
-    });
+  var [isSignedin, setSign] = useState(false);
+  function openNavBar() {
+    console.log("Signed In");
+    console.log(isSignedin);
+    setSign((isSignedin = true));
   };
 
   // const paperstyle={padding: 20, height: '70vh', width: 415, display:'inline-flex',borderRadius:10}
   const responseGoogle = (message) => {
     console.log(message);
   }
+  if(! isSignedin)
   return (
     // <Paper elevation={5} style={paperstyle}>
       <Container component="main" maxWidth="xs" elevation={5}>
@@ -46,7 +46,7 @@ export default function SignIn() {
           <Typography component="h1" variant="h5">
             Sign in
           </Typography>
-          <Box component="form" onSubmit={handleSubmit} noValidate sx={{ mt: 1 }}>
+          <Box component="form" onClick={openNavBar} noValidate sx={{ mt: 1 }}>
             <TextField
               margin="normal"
               required
@@ -76,6 +76,7 @@ export default function SignIn() {
               fullWidth
               variant="contained"
               sx={{ mt: 3, mb: 2 }}
+              onClick={openNavBar}
             >
               Sign In
             </Button>
@@ -105,4 +106,7 @@ export default function SignIn() {
       </Container>
       // </Paper>
   );
+  else return<Navbar/>
 }
+
+

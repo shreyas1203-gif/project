@@ -15,7 +15,9 @@ import AccountCircle from '@mui/icons-material/AccountCircle';
 import MailIcon from '@mui/icons-material/Mail';
 import NotificationsIcon from '@mui/icons-material/Notifications';
 import MoreIcon from '@mui/icons-material/MoreVert';
-
+import Login from "./Login";
+import Signup from "./Signup";
+import { useState } from 'react';
 const Search = styled('div')(({ theme }) => ({
   position: 'relative',
   borderRadius: theme.shape.borderRadius,
@@ -59,7 +61,12 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
 export default function PrimarySearchAppBar() {
   const [anchorEl, setAnchorEl] = React.useState(null);
   const [mobileMoreAnchorEl, setMobileMoreAnchorEl] = React.useState(null);
-
+  var [isSignedin, setSign] = useState(true);
+  function openSignBar() {
+    console.log("Signed In");
+    console.log(isSignedin);
+    setSign((isSignedin = false));
+  }
   const isMenuOpen = Boolean(anchorEl);
   const isMobileMenuOpen = Boolean(mobileMoreAnchorEl);
 
@@ -97,8 +104,20 @@ export default function PrimarySearchAppBar() {
       open={isMenuOpen}
       onClose={handleMenuClose}
     >
-      <MenuItem onClick={handleMenuClose}>Update Profile</MenuItem>
-      <MenuItem href='./Login.js'>Login</MenuItem>
+      <MenuItem onClick={handleProfileMenuOpen}>Update Profile</MenuItem>
+      <MenuItem onClick={openSignBar}>
+        <IconButton
+          size="large"
+          aria-label="account of current user"
+          aria-controls="primary-search-account-menu"
+          aria-haspopup="true"
+          color="inherit"
+        >
+          <AccountCircle />
+        </IconButton>
+        <p>Logout</p>
+      </MenuItem>
+      
     </Menu>
   );
 
@@ -151,9 +170,21 @@ export default function PrimarySearchAppBar() {
         </IconButton>
         <p>Profile</p>
       </MenuItem>
+      <MenuItem onClick={openSignBar}>
+        <IconButton
+          size="large"
+          aria-label="account of current user"
+          aria-controls="primary-search-account-menu"
+          aria-haspopup="true"
+          color="inherit"
+        >
+          <AccountCircle />
+        </IconButton>
+        <p>Logout</p>
+      </MenuItem>
     </Menu>
   );
-
+if(isSignedin)
   return (
     <Box sx={{ flexGrow: 1 }}>
       <AppBar position="static">
@@ -229,5 +260,8 @@ export default function PrimarySearchAppBar() {
       {renderMobileMenu}
       {renderMenu}
     </Box>
+  
   );
+  else return <Login/>
+
 }
